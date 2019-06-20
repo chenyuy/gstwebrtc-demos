@@ -8,8 +8,9 @@
  */
 
 // Set this to override the automatic detection in websocketServerConnect()
-var ws_server;
+var ws_server = "127.0.0.1";
 var ws_port;
+var enable_ssl = false;
 // Set this to use a specific peer id instead of a random one
 var default_peer_id;
 // Override with your own STUN servers if you want
@@ -205,7 +206,7 @@ function websocketServerConnect() {
     } else {
         throw new Error ("Don't know how to connect to the signalling server with uri" + window.location);
     }
-    var ws_url = 'wss://' + ws_server + ':' + ws_port
+    var ws_url = (enable_ssl ? 'wss://' : 'ws://') + ws_server + ':' + ws_port
     setStatus("Connecting to server " + ws_url);
     ws_conn = new WebSocket(ws_url);
     /* When connected, immediately register with the server */
